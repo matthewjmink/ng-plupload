@@ -1,7 +1,7 @@
 (function() {
   'use strict'
 
-  angular.module('cpPlupload')
+  angular.module('plupload')
     .directive('pluploadSubmit', pluploadSubmit);
 
   pluploadSubmit.$inject = ['pluploadService'];

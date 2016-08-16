@@ -1,12 +1,12 @@
 (function() {
   'use strict'
-  angular.module('cpPlupload', []);
+  angular.module('plupload', []);
 })();
 
 (function() {
   'use strict'
 
-  angular.module('cpPlupload')
+  angular.module('plupload')
     .factory('pluploadService', pluploadService);
 
   function pluploadService() {
@@ -60,7 +60,7 @@
 (function() {
   'use strict'
 
-  angular.module('cpPlupload')
+  angular.module('plupload')
     .directive('plupload', pluploadDir);
 
   pluploadDir.$inject = ['pluploadService'];
@@ -123,7 +123,7 @@
 (function() {
   'use strict'
 
-  angular.module('cpPlupload')
+  angular.module('plupload')
     .directive('pluploadSubmit', pluploadSubmit);
 
   pluploadSubmit.$inject = ['pluploadService'];

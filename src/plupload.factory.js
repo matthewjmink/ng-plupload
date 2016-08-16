@@ -1,7 +1,7 @@
 (function() {
   'use strict'
 
-  angular.module('cpPlupload')
+  angular.module('plupload')
     .factory('pluploadService', pluploadService);
 
   function pluploadService() {
