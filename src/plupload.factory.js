@@ -2,7 +2,7 @@
     'use strict'
 
     angular.module('plupload')
-    .factory('pluploadService', pluploadService);
+        .factory('pluploadService', pluploadService);
 
     function pluploadService() {
         var defaultOptions = {
@@ -22,6 +22,7 @@
         return {
             new: newUploader,
             get: getUploader,
+            setOption: setOption,
             defaultOptions: defaultOptions
         };
 
@@ -42,11 +43,31 @@
             return null;
         }
 
-        function newUploader(id, opts) {
+        function newUploader(scope, id, opts, events) {
             if(typeof id !== 'string' || typeof uploaders[id] !== 'undefined') {
                 id = uniqueId();
             }
             uploaders[id] = new plupload.Uploader(opts);
+            if(events) {
+                var callbackMethods = ['Init', 'PostInit', 'OptionChanged',
+                'Refresh', 'StateChanged', 'UploadFile', 'BeforeUpload', 'QueueChanged',
+                'UploadProgress', 'FilesRemoved', 'FileFiltered', 'FilesAdded',
+                'FileUploaded', 'ChunkUploaded', 'UploadComplete', 'Error', 'Destroy'];
+                angular.forEach(callbackMethods, function(method) {
+                    var callback = (events[method] || angular.noop);
+                    uploaders[id].bind(method, function() {
+                        callback.apply(null, arguments);
+                        if (!scope.$$phase && !scope.$root.$$phase) {
+                            scope.$apply();
+                        }
+                    });
+                });
+            }
+            return uploaders[id];
+        }
+
+        function setOption(id, option, value) {
+            uploaders[id].setOption(option, value);
             return uploaders[id];
         }
     }

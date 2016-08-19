@@ -2,7 +2,7 @@
     'use strict'
 
     angular.module('plupload')
-    .directive('plupload', pluploadDir);
+        .directive('plupload', pluploadDir);
 
     pluploadDir.$inject = ['pluploadService'];
     function pluploadDir (pluploadService) {
@@ -31,7 +31,7 @@
                 if(newValue !== oldValue) {
                     opts.url = newValue;
                     if(uploader) {
-                        uploader.setOption('url', newValue)
+                        uploader = pluploadService.setOption(scope.id, 'url', newValue);
                     } else {
                         initUploader();
                     }
@@ -39,22 +39,7 @@
             });
 
             function initUploader() {
-                uploader = pluploadService.new(scope.id, opts);
-                if(scope.events) {
-                    var callbackMethods = ['Init', 'PostInit', 'OptionChanged',
-                    'Refresh', 'StateChanged', 'UploadFile', 'BeforeUpload', 'QueueChanged',
-                    'UploadProgress', 'FilesRemoved', 'FileFiltered', 'FilesAdded',
-                    'FileUploaded', 'ChunkUploaded', 'UploadComplete', 'Error', 'Destroy'];
-                    angular.forEach(callbackMethods, function(method) {
-                        var callback = (scope.events[method] || angular.noop);
-                        uploader.bind(method, function() {
-                            callback.apply(null, arguments);
-                            if (!scope.$$phase && !scope.$root.$$phase) {
-                                scope.$apply();
-                            }
-                        });
-                    });
-                }
+                uploader = pluploadService.new(scope, scope.id, opts, scope.events);
                 uploader.init();
             }
         }
