@@ -16,10 +16,11 @@
             max_retries: 0,
             multi_selection: false,
             filters: {
-                max_file_size: '400mb',
-                mime_types: [
-                { title: "Files", extensions: "pdf,doc,docx,xls,xlsx,xlsb,xlsm,ppt,pptx,pptm,png,gif,jpg,zip" }
-                ]
+                max_file_size: '200mb',
+                mime_types: [{
+                    title: "Files",
+                    extensions: "pdf,doc,docx,xls,xlsx,xlsb,xlsm,ppt,pptx,pptm,png,gif,jpg,zip"
+                }]
             },
         };
         var uploaders = {};
